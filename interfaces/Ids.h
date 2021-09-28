@@ -206,6 +206,13 @@ namespace Exchange {
         ID_DIALSERVER,
         ID_DIALSERVER_APPLICATION,
         ID_ESSOS_SAMPLE,
+
+        //OCDM
+        ID_ACCESSOROCDM,
+        ID_ACCESSOROCDM_NOTIFICATION,
+        ID_SESSION,
+        ID_SESSION_CALLBACK,
+        ID_SESSION_EXTENSION,
     };
 }
 }
