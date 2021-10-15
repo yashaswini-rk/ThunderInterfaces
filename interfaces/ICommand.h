@@ -114,20 +114,18 @@ namespace Exchange {
                 // -----------------------------------------------------
                 // Check for Abort method on Object
                 // -----------------------------------------------------
-                HAS_MEMBER(Abort, hasAbort);
+                IS_MEMBER_AVAILABLE(Abort, hasAbort);
 
-                typedef hasAbort<IMPLEMENTATION, void (IMPLEMENTATION::*)()> TraitAbort;
-
-                template <typename SUBJECT>
-                inline typename Core::TypeTraits::enable_if<CommandType<SUBJECT>::TraitAbort::value, void>::type
+                template <typename SUBJECT = IMPLEMENTATION>
+                inline typename Core::TypeTraits::enable_if<hasAbort<SUBJECT, void>::value, void>::type
                 __Abort()
                 {
                     _implementation.Abort();
                     ;
                 }
 
-                template <typename SUBJECT>
-                inline typename Core::TypeTraits::enable_if<!CommandType<SUBJECT>::TraitAbort::value, void>::type
+                template <typename SUBJECT = IMPLEMENTATION>
+                inline typename Core::TypeTraits::enable_if<!hasAbort<SUBJECT, void>::value, void>::type
                 __Abort()
                 {
                 }
