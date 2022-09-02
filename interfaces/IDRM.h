@@ -230,6 +230,28 @@ public:
     virtual void OnKeyStatusesUpdated() const = 0;
 };
 
+typedef enum 
+{
+    Unknown = 0,
+    Video,
+    Audio,
+    Data
+} MediaType;
+// ICapsParser to provide information about the current stream
+class ICapsParser {
+public:
+    ICapsParser(void) {}
+    virtual ~ICapsParser(void) {}
+
+    virtual void Parse(const uint8_t* info, uint16_t infoLength) = 0;
+
+    // Get stream video size
+    virtual const uint16_t GetHeight() const = 0;
+    virtual const uint16_t GetWidth() const = 0;
+    // Get stream type
+    virtual const MediaType GetMediaType() const = 0;
+};
+
 // IMediaKeySession defines the MediaKeySession interface.
 class IMediaKeySession {
 public:
@@ -290,7 +312,12 @@ public:
         uint8_t* f_pbClearContentOpaque)
         = 0;
 
+    // These are new methods that might not have been implemented by the 
+    // base implementations. If they are not implemented, the system will
+    // probably not need it, but it will continue to build :-)
     virtual CDMi_RESULT ResetOutputProtection() {return CDMi_SUCCESS;}
+    virtual CDMi_RESULT SetParameter(const std::string& name, const std::string& value) {return CDMi_SUCCESS;}
+    virtual CDMi_RESULT SetCapsParser(const ICapsParser* parser) { return CDMi_SUCCESS; }
 };
 
 // IMediaKeySession defines the MediaKeySession interface.
